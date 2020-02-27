@@ -1,6 +1,10 @@
 module Arel
   module Visitors
     class Fb < Arel::Visitors::ToSql
+      def preparable
+        false
+      end
+
       private
 
       def visit_Arel_Nodes_SelectStatement o, collector
@@ -67,7 +71,7 @@ module Arel
           end
         end
 
-        collector = maybe_visit o.having, collector
+        collector = maybe_visit o.havings, collector
         collector
       end
 
@@ -92,5 +96,3 @@ module Arel
     end
   end
 end
-
-Arel::Visitors::VISITORS['fb'] = Arel::Visitors::Fb
